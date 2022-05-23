@@ -19,21 +19,23 @@ gameScene.preload = function () {
 
   // загрузка изображений
   this.load.image("bg1", "bg1.png");
-  this.load.image("bg2", "bg2.png");
-  this.load.image("bg3", "bg3.png");
-  this.load.image("bg11", "bg11.png");
   this.load.image("paul1", "paul1.png");
   this.load.image("paul2", "paul2.png");
   this.load.image("lexi1", "lexi1.png");
   this.load.image("lexi2", "lexi2.png");
   this.load.image("intro-dialog1", "intro-dialog1.png");
   this.load.image("intro-dialog2", "intro-dialog2.png");
+
+  // загрузка аудио с массивом расширений
+  this.load.audio("bgSound", ["bgSound.wav", "bgSound.mp3"]);
 };
 
 // выполняется один раз, после загрузки ресурсов
 gameScene.create = function () {
   // фон
-  this.add.image(0, 0, "bg11").setOrigin(0, 0);
+  this.add.image(0, 0, "bg1").setOrigin(0, 0);
+  // фоновая музыка
+  this.sound.add("bgSound", { loop: true }).play();
 
   // создание анимация героя
   this.anims.create({
