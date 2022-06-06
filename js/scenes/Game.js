@@ -11,6 +11,7 @@ export default class Game extends Phaser.Scene {
     this.load.path = "assets/";
 
     this.load.audio("bgSound", ["bgSound.wav", "bgSound.mp3"]);
+    //TODO this.load.audio("clickSound", ["clickSound.wav", "clickSound.mp3"]);
 
     this.load.image("bg1", "bg1.png");
     this.load.image("bg2", "bg2.png");
@@ -37,7 +38,11 @@ export default class Game extends Phaser.Scene {
     this.load.image("dialogIntroPaul", "dialogIntroPaul.png");
     this.load.image("dialogIntroLexi", "dialogIntroLexi.png");
     this.load.image("dialogAmasingPaul", "dialogAmasingPaul.png");
-    this.load.image("billet", "billet.png");
+    this.load.image("displayBoard", "displayBoard.png");
+    this.load.image("progress0", "progress0.png");
+    this.load.image("progress1", "progress1.png");
+    this.load.image("progress2", "progress2.png");
+    this.load.image("progress3", "progress3.png");
     this.load.image("button", "button.png");
     this.load.image("hover", "hover.png");
     this.load.image("hand", "hand.png");
@@ -52,6 +57,7 @@ export default class Game extends Phaser.Scene {
     this.load.image("place2", "place2.png");
     this.load.image("playNow", "playNow.png");
 
+    //FIXME plugin of click or tuch on buttons
     this.clickButton = this.input.keyboard.createCursorKeys();
   }
 
@@ -63,14 +69,15 @@ export default class Game extends Phaser.Scene {
     // overlay
     this.graphics = this.add.graphics().fillStyle(0x000000, 0.7);
     this.graphics.fillRect(0, 0, 600, 900);
-    // billet
-    this.billet = this.add.image(300, -40, "billet").setScale(0.5);
-    // text of billet
-    this.billetText = this.add.text(150, -45, "Choose your dress", {
-      align: "center",
+    // display board
+    this.displayBoard = this.add.image(300, -40, "displayBoard").setScale(0.5);
+    this.displayBoardText = this.add.text(0, -45, "Choose your dress", {
       fontSize: "32px",
       fill: "#fff",
     });
+    this.displayBoardText.x = (600 - this.displayBoardText.width) / 2;
+    // progress
+    this.progress = this.add.image(300, -10, "progress0").setScale(0.9);
 
     // creating character animation
     this.anims.create({
@@ -178,7 +185,7 @@ export default class Game extends Phaser.Scene {
       // hint pointer
       this.hand = this.add.image(220, 1200, "hand");
 
-      // click or tuch on buttons
+      //FIXME function of click or tuch on buttons
       const clickButtonLeft = () => {
         this.chooseClothes(
           220,
@@ -188,6 +195,7 @@ export default class Game extends Phaser.Scene {
           this.cloths3,
           this.cloths4,
           "bag",
+          "progress1",
           "lexiDress1"
         );
       };
@@ -201,6 +209,7 @@ export default class Game extends Phaser.Scene {
           this.cloths3,
           this.cloths4,
           "bag",
+          "progress1",
           "lexiDress2"
         );
       };
@@ -227,8 +236,10 @@ export default class Game extends Phaser.Scene {
       );
       this.lexi.y = 465 + (this.timeCount - this.SCENE_DELAY * 2) / 4;
 
-      this.billet.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5;
-      this.billetText.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5 - 15;
+      this.displayBoard.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5;
+      this.displayBoardText.y =
+        (this.timeCount - this.SCENE_DELAY * 2) / 7.5 - 15;
+      this.progress.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5 + 35;
 
       this.buttonLeft.setScale(
         (this.timeCount - this.SCENE_DELAY * 2) / this.DELAY_TIME
@@ -267,12 +278,12 @@ export default class Game extends Phaser.Scene {
     // function of hover
     if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x < 300
+      this.hand.x < 280
     ) {
       this.hover.x = 160;
     } else if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x > 300
+      this.hand.x > 320
     ) {
       this.hover.x = 440;
     }
@@ -297,22 +308,24 @@ export default class Game extends Phaser.Scene {
 
     // time > 7760
     if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 540 &&
+      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
       this.clickButton.left.isDown
     ) {
       this.hand.x = 220;
     } else if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 540 &&
+      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
       this.clickButton.right.isDown
     ) {
       this.hand.x = 500;
     }
 
+    // TODO function hint pointer for idle 2000 ms
+
     // choice of dress
     if (
       this.lexi.texture.key === "lexiIntro3" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -322,12 +335,13 @@ export default class Game extends Phaser.Scene {
         this.cloths3,
         this.cloths4,
         "bag",
+        "progress1",
         "lexiDress1"
       );
     } else if (
       this.lexi.texture.key === "lexiIntro3" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -337,6 +351,7 @@ export default class Game extends Phaser.Scene {
         this.cloths3,
         this.cloths4,
         "bag",
+        "progress1",
         "lexiDress2"
       );
     }
@@ -345,7 +360,7 @@ export default class Game extends Phaser.Scene {
     if (
       this.lexi.texture.key === "lexiDress1" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -355,12 +370,13 @@ export default class Game extends Phaser.Scene {
         this.cloths5,
         this.cloths6,
         "accessory",
+        "progress2",
         "lexiBag1"
       );
     } else if (
       this.lexi.texture.key === "lexiDress1" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -370,12 +386,13 @@ export default class Game extends Phaser.Scene {
         this.cloths5,
         this.cloths6,
         "accessory",
+        "progress2",
         "lexiBag2"
       );
     } else if (
       this.lexi.texture.key === "lexiDress2" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -385,12 +402,13 @@ export default class Game extends Phaser.Scene {
         this.cloths5,
         this.cloths7,
         "accessory",
+        "progress2",
         "lexiBag3"
       );
     } else if (
       this.lexi.texture.key === "lexiDress2" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -400,6 +418,7 @@ export default class Game extends Phaser.Scene {
         this.cloths5,
         this.cloths7,
         "accessory",
+        "progress2",
         "lexiBag4"
       );
     }
@@ -408,7 +427,7 @@ export default class Game extends Phaser.Scene {
     if (
       this.lexi.texture.key === "lexiBag1" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -418,12 +437,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory1"
       );
     } else if (
       this.lexi.texture.key === "lexiBag1" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -433,12 +453,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory2"
       );
     } else if (
       this.lexi.texture.key === "lexiBag2" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -448,12 +469,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory3"
       );
     } else if (
       this.lexi.texture.key === "lexiBag2" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -463,12 +485,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory4"
       );
     } else if (
       this.lexi.texture.key === "lexiBag3" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -478,12 +501,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory5"
       );
     } else if (
       this.lexi.texture.key === "lexiBag3" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -493,12 +517,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory6"
       );
     } else if (
       this.lexi.texture.key === "lexiBag4" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -508,12 +533,13 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory7"
       );
     } else if (
       this.lexi.texture.key === "lexiBag4" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.chooseClothes(
         this.hand.x,
@@ -523,15 +549,16 @@ export default class Game extends Phaser.Scene {
         this.place1,
         this.place2,
         "place",
+        "progress3",
         "lexiAccessory8"
       );
     }
 
     // choice of place
     if (
-      this.billetText.text === "Choose your place" &&
+      this.displayBoardText.text === "Choose your place" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 220
+      this.hand.x < 300
     ) {
       this.choosePlace(
         this.hand.x,
@@ -541,9 +568,9 @@ export default class Game extends Phaser.Scene {
         "bg2"
       );
     } else if (
-      this.billetText.text === "Choose your place" &&
+      this.displayBoardText.text === "Choose your place" &&
       this.clickButton.space.isDown &&
-      this.hand.x === 500
+      this.hand.x > 300
     ) {
       this.choosePlace(
         this.hand.x,
@@ -579,12 +606,13 @@ export default class Game extends Phaser.Scene {
 
       if (this.amasingDelay > 2000 && this.amasingDelay < 2300) {
         this.dialogAmasingPaul.setScale(0.5 - (this.amasingDelay - 2000) / 640);
-        this.playNow = this.add.image(300, 720, "playNow").setScale(0);
+        this.playNow = this.add.image(300, 800, "playNow").setScale(0);
       }
 
       if (this.amasingDelay > 2300 && this.amasingDelay < 2600) {
         this.dialogAmasingPaul.destroy();
         this.playNow.setScale((this.amasingDelay - 2300) / 320);
+        // TODO link this.playNow
       }
     }
   }
@@ -597,6 +625,7 @@ export default class Game extends Phaser.Scene {
     nextClothes1,
     nextClothes2,
     nextChoose,
+    progress,
     lexiInClothes
   ) {
     this.hand.x = x;
@@ -614,7 +643,10 @@ export default class Game extends Phaser.Scene {
     }, 100);
 
     setTimeout(() => {
-      this.billetText.text = `Choose your ${nextChoose}`;
+      this.displayBoardText.text = `Choose your ${nextChoose}`;
+      this.displayBoardText.x = (600 - this.displayBoardText.width) / 2;
+      this.progress.setTexture(progress);
+      // TODO animation of magical change of clothes
       this.lexi.setTexture(lexiInClothes);
 
       selectedClothes.destroy();
@@ -640,8 +672,9 @@ export default class Game extends Phaser.Scene {
     }, 100);
 
     setTimeout(() => {
-      this.billet.destroy();
-      this.billetText.destroy();
+      this.displayBoard.destroy();
+      this.displayBoardText.destroy();
+      this.progress.destroy();
       this.buttonLeft.destroy();
       this.buttonRight.destroy();
       this.hover.destroy();
@@ -655,3 +688,6 @@ export default class Game extends Phaser.Scene {
     }, 200);
   }
 }
+
+// TODO adaptable for mobile
+// TODO run server on GitHub or Netlify
