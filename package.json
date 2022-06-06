@@ -2,10 +2,7 @@
   "name": "test-task-playable-ads",
   "version": "1.0.0",
   "description": "Test task of dynamic keys",
-  "main": "index.js",
-  "scripts": {
-    "start": "node test"
-  },
+  "main": "./js/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Eduard-Konovka/test-task-playable-ads.git"
@@ -15,8 +12,5 @@
   "bugs": {
     "url": "https://github.com/Eduard-Konovka/test-task-playable-ads/issues"
   },
-  "homepage": "https://github.com/Eduard-Konovka/test-task-playable-ads#readme",
-  "dependencies": {
-    "phaser": "^3.55.2"
-  }
+  "homepage": "https://github.com/Eduard-Konovka/test-task-playable-ads#readme"
 }
