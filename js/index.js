@@ -10,5 +10,8 @@ new Phaser.Game({
   width: 600,
   height: 900,
   zoom: windowSize(),
+  title: "My Fantasy: Make Your Story",
+  // FIXME url
+  url: "https://eduard-konovka.github.io/test-task-playable-ads/",
   scene: Game,
 });

@@ -689,5 +689,4 @@ export default class Game extends Phaser.Scene {
   }
 }
 
-// TODO background for adaptable for mobile
 // TODO run server on GitHub or Netlify
