@@ -1,6 +1,6 @@
-export default class Game extends Phaser.Scene {
+export default class VerticalGame extends Phaser.Scene {
   constructor() {
-    super("game");
+    super("verticalGame");
     this.DELAY_TIME = 300;
     this.SCENE_DELAY = 3000;
     this.timeCount = 0;
@@ -11,11 +11,11 @@ export default class Game extends Phaser.Scene {
     this.load.path = "assets/";
 
     this.load.audio("bgSound", ["bgSound.wav", "bgSound.mp3"]);
-    //TODO this.load.audio("clickSound", ["clickSound.wav", "clickSound.mp3"]);
+    this.load.audio("clickSound", ["clickSound.wav", "clickSound.mp3"]);
 
-    this.load.image("bg1", "bg1.png");
-    this.load.image("bg2", "bg2.png");
-    this.load.image("bg3", "bg3.png");
+    this.load.image("bg1", "bgV1.png");
+    this.load.image("bg2", "bgV2.png");
+    this.load.image("bg3", "bgV3.png");
     this.load.image("paul1", "paul1.png");
     this.load.image("paul2", "paul2.png");
     this.load.image("lexiIntro1", "lexiIntro1.png");
@@ -170,6 +170,8 @@ export default class Game extends Phaser.Scene {
 
       // hover of button
       this.hover = this.add.image(160, 720, "hover").setScale(0);
+      // sound of button
+      this.clickSound = this.sound.add("clickSound");
 
       // cloths & places
       this.cloths1 = this.add.image(160, 720, "cloths1").setScale(0);
@@ -187,6 +189,7 @@ export default class Game extends Phaser.Scene {
 
       //FIXME function of click or tuch on buttons
       const clickButtonLeft = () => {
+        this.clickSound.play();
         this.chooseClothes(
           220,
           this.buttonLeft,
@@ -201,6 +204,7 @@ export default class Game extends Phaser.Scene {
       };
 
       const clickButtonRight = () => {
+        this.clickSound.play();
         this.chooseClothes(
           500,
           this.buttonRight,
@@ -630,6 +634,8 @@ export default class Game extends Phaser.Scene {
   ) {
     this.hand.x = x;
 
+    this.clickSound.play();
+
     this.hand.setScale(0.9);
     button.setScale(0.9);
     this.hover.setScale(0.9);
@@ -658,6 +664,8 @@ export default class Game extends Phaser.Scene {
 
   choosePlace(x, button, selectedClothes, alternativeClothes, place) {
     this.hand.x = x;
+
+    this.clickSound.play();
 
     this.hand.setScale(0.9);
     button.setScale(0.9);
@@ -689,4 +697,5 @@ export default class Game extends Phaser.Scene {
   }
 }
 
+// FIXME refactor "time" ---> "if"
 // TODO run server on GitHub or Netlify
