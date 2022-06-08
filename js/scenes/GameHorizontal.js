@@ -1,6 +1,6 @@
-export default class HorizontalGame extends Phaser.Scene {
+export default class GameHorizontal extends Phaser.Scene {
   constructor() {
-    super("horizontalGame");
+    super("gameHorizontal");
     this.DELAY_TIME = 300;
     this.SCENE_DELAY = 3000;
     this.timeCount = 0;
@@ -196,6 +196,7 @@ export default class HorizontalGame extends Phaser.Scene {
 
       // link to game source
       this.playNow = this.add.image(540, 800, "playNow").setScale(0);
+      this.playNow.setInteractive();
 
       // function of click or tuch on buttons or keyboard
       const clickFunction = (x) => {
@@ -511,9 +512,7 @@ export default class HorizontalGame extends Phaser.Scene {
       this.background.texture.key === "bg3"
     ) {
       this.amasingDelay += delta;
-      // TODO removeAllListeners
-      this.keySpace.removeAllListeners("keydown-SPACE");
-      this.keyEnter.removeAllListeners("keydown-ENTER");
+      this.keySpace.removeAllListeners();
 
       if (this.lexi.x < 400) {
         this.lexi.x = this.amasingDelay - 540;
@@ -547,6 +546,9 @@ export default class HorizontalGame extends Phaser.Scene {
           console.log("Link to game source")
         );
         this.input.keyboard.on("keydown-ENTER", () =>
+          console.log("Link to game source")
+        );
+        this.playNow.on("pointerdown", () =>
           console.log("Link to game source")
         );
       }
@@ -630,5 +632,3 @@ export default class HorizontalGame extends Phaser.Scene {
     }, 200);
   }
 }
-
-// TODO run server on GitHub or Netlify

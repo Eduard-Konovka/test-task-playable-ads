@@ -1,5 +1,5 @@
-import HorizontalGame from "./scenes/HorizontalGame.js";
-import VerticalGame from "./scenes/VerticalGame.js";
+import GameHorizontal from "./scenes/GameHorizontal.js";
+import GameVertical from "./scenes/GameVertical.js";
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -12,5 +12,8 @@ new Phaser.Game({
   title: "My Fantasy: Make Your Story",
   // FIXME url
   url: "https://eduard-konovka.github.io/test-task-playable-ads/",
-  scene: window.innerWidth > window.innerHeight ? HorizontalGame : VerticalGame,
+  scene: window.innerWidth > window.innerHeight ? GameHorizontal : GameVertical,
 });
+
+// TODO run server on GitHub or Netlify
+// TODO choice of zoom
