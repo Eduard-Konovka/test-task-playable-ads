@@ -10,10 +10,8 @@ new Phaser.Game({
       ? window.innerHeight / 900
       : window.innerWidth / 600,
   title: "My Fantasy: Make Your Story",
-  // FIXME url
-  url: "https://eduard-konovka.github.io/test-task-playable-ads/",
+  url: "https://github.com/Eduard-Konovka/test-task-playable-ads",
   scene: window.innerWidth > window.innerHeight ? GameHorizontal : GameVertical,
 });
 
-// TODO run server on GitHub or Netlify
 // TODO choice of zoom

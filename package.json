@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Test task of dynamic keys",
   "main": "./js/index.js",
+  "scripts": {
+    "deploy": "netlify deploy -p"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Eduard-Konovka/test-task-playable-ads.git"
