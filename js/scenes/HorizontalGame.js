@@ -1,6 +1,6 @@
-export default class VerticalGame extends Phaser.Scene {
+export default class HorizontalGame extends Phaser.Scene {
   constructor() {
-    super("verticalGame");
+    super("horizontalGame");
     this.DELAY_TIME = 300;
     this.SCENE_DELAY = 3000;
     this.timeCount = 0;
@@ -13,9 +13,9 @@ export default class VerticalGame extends Phaser.Scene {
     this.load.audio("bgSound", ["bgSound.wav", "bgSound.mp3"]);
     this.load.audio("clickSound", ["clickSound.wav", "clickSound.mp3"]);
 
-    this.load.image("bg1", "bgV1.png");
-    this.load.image("bg2", "bgV2.png");
-    this.load.image("bg3", "bgV3.png");
+    this.load.image("bg1", "bgH1.png");
+    this.load.image("bg2", "bgH2.png");
+    this.load.image("bg3", "bgH3.png");
     this.load.image("paul1", "paul1.png");
     this.load.image("paul2", "paul2.png");
     this.load.image("lexiIntro1", "lexiIntro1.png");
@@ -70,19 +70,19 @@ export default class VerticalGame extends Phaser.Scene {
     // background music
     this.sound.add("bgSound", { loop: true }).play();
     // background
-    this.background = this.add.image(300, 450, "bg1");
+    this.background = this.add.image(540, 450, "bg1");
     // overlay
     this.graphics = this.add.graphics().fillStyle(0x000000, 0.7);
-    this.graphics.fillRect(0, 0, 600, 900);
+    this.graphics.fillRect(0, 0, 1080, 900);
     // display board
-    this.displayBoard = this.add.image(300, -40, "displayBoard").setScale(0.5);
+    this.displayBoard = this.add.image(540, -40, "displayBoard").setScale(0.5);
     this.displayBoardText = this.add.text(0, -45, "Choose your dress", {
       fontSize: "32px",
       fill: "#fff",
     });
-    this.displayBoardText.x = (600 - this.displayBoardText.width) / 2;
+    this.displayBoardText.x = (1080 - this.displayBoardText.width) / 2;
     // progress
-    this.progress = this.add.image(300, -10, "progress0").setScale(0.9);
+    this.progress = this.add.image(540, -10, "progress0").setScale(0.9);
 
     // creating character animation
     this.anims.create({
@@ -100,20 +100,20 @@ export default class VerticalGame extends Phaser.Scene {
     });
 
     // adding animation heroes
-    this.paul = this.add.sprite(300, 465, "paul1").play("introPaul");
+    this.paul = this.add.sprite(540, 465, "paul1").play("introPaul");
     this.lexi = this.add.sprite(-300, 465, "lexiIntro1").play("introLexi");
 
     // hero dialogues
     this.dialogIntroPaul = this.add
-      .image(300, 450, "dialogIntroPaul")
+      .image(540, 450, "dialogIntroPaul")
       .setScale(0);
 
     this.dialogIntroLexi = this.add
-      .image(300, 450, "dialogIntroLexi")
+      .image(540, 450, "dialogIntroLexi")
       .setScale(0);
 
     this.dialogAmasingPaul = this.add
-      .image(300, 450, "dialogAmasingPaul")
+      .image(540, 450, "dialogAmasingPaul")
       .setScale(0);
   }
 
@@ -133,8 +133,9 @@ export default class VerticalGame extends Phaser.Scene {
       this.dialogIntroPaul.setScale(
         (this.SCENE_DELAY - this.timeCount) / this.DELAY_TIME / 2
       );
-      this.paul.x = this.DELAY_TIME * 2 + this.timeCount - this.SCENE_DELAY;
-      this.lexi.x = this.timeCount - this.SCENE_DELAY;
+      this.paul.x =
+        this.DELAY_TIME * 2 + this.timeCount - this.SCENE_DELAY + 540;
+      this.lexi.x = this.timeCount - this.SCENE_DELAY + 240;
     }
 
     // time 3000...3300
@@ -168,38 +169,38 @@ export default class VerticalGame extends Phaser.Scene {
       this.lexi.setTexture("lexiIntro3");
 
       // buttons
-      this.buttonLeft = this.add.image(160, 720, "button").setScale(0);
-      this.buttonRight = this.add.image(440, 720, "button").setScale(0);
+      this.buttonLeft = this.add.image(400, 720, "button").setScale(0);
+      this.buttonRight = this.add.image(680, 720, "button").setScale(0);
       this.buttonLeft.setInteractive();
       this.buttonRight.setInteractive();
 
       // hover of button
-      this.hover = this.add.image(160, 720, "hover").setScale(0);
+      this.hover = this.add.image(400, 720, "hover").setScale(0);
 
       // sound of button
       this.clickSound = this.sound.add("clickSound");
 
       // clothes & places
-      this.clothes1 = this.add.image(160, 720, "clothes1").setScale(0);
-      this.clothes2 = this.add.image(440, 720, "clothes2").setScale(0);
-      this.clothes3 = this.add.image(160, 720, "clothes3").setScale(0);
-      this.clothes4 = this.add.image(440, 720, "clothes4").setScale(0);
-      this.clothes5 = this.add.image(160, 720, "clothes5").setScale(0);
-      this.clothes6 = this.add.image(440, 720, "clothes6").setScale(0);
-      this.clothes7 = this.add.image(440, 720, "clothes7").setScale(0);
-      this.place1 = this.add.image(160, 720, "place1").setScale(0);
-      this.place2 = this.add.image(440, 720, "place2").setScale(0);
+      this.clothes1 = this.add.image(400, 720, "clothes1").setScale(0);
+      this.clothes2 = this.add.image(680, 720, "clothes2").setScale(0);
+      this.clothes3 = this.add.image(400, 720, "clothes3").setScale(0);
+      this.clothes4 = this.add.image(680, 720, "clothes4").setScale(0);
+      this.clothes5 = this.add.image(400, 720, "clothes5").setScale(0);
+      this.clothes6 = this.add.image(680, 720, "clothes6").setScale(0);
+      this.clothes7 = this.add.image(680, 720, "clothes7").setScale(0);
+      this.place1 = this.add.image(400, 720, "place1").setScale(0);
+      this.place2 = this.add.image(680, 720, "place2").setScale(0);
 
       // hint pointer
-      this.hand = this.add.image(220, 1200, "hand");
+      this.hand = this.add.image(460, 1200, "hand");
 
       // link to game source
-      this.playNow = this.add.image(300, 800, "playNow").setScale(0);
+      this.playNow = this.add.image(540, 800, "playNow").setScale(0);
 
       // function of click or tuch on buttons or keyboard
       const clickFunction = (x) => {
         // choice of dress
-        if (this.lexi.texture.key === "lexiIntro3" && x < 300) {
+        if (this.lexi.texture.key === "lexiIntro3" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -211,7 +212,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress1",
             "lexiDress1"
           );
-        } else if (this.lexi.texture.key === "lexiIntro3" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiIntro3" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -226,7 +227,7 @@ export default class VerticalGame extends Phaser.Scene {
         }
 
         // choice of bag
-        if (this.lexi.texture.key === "lexiDress1" && x < 300) {
+        if (this.lexi.texture.key === "lexiDress1" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -238,7 +239,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress2",
             "lexiBag1"
           );
-        } else if (this.lexi.texture.key === "lexiDress1" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiDress1" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -250,7 +251,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress2",
             "lexiBag2"
           );
-        } else if (this.lexi.texture.key === "lexiDress2" && x < 300) {
+        } else if (this.lexi.texture.key === "lexiDress2" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -262,7 +263,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress2",
             "lexiBag3"
           );
-        } else if (this.lexi.texture.key === "lexiDress2" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiDress2" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -277,7 +278,7 @@ export default class VerticalGame extends Phaser.Scene {
         }
 
         // choice of accessory
-        if (this.lexi.texture.key === "lexiBag1" && x < 300) {
+        if (this.lexi.texture.key === "lexiBag1" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -289,7 +290,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory1"
           );
-        } else if (this.lexi.texture.key === "lexiBag1" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiBag1" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -301,7 +302,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory2"
           );
-        } else if (this.lexi.texture.key === "lexiBag2" && x < 300) {
+        } else if (this.lexi.texture.key === "lexiBag2" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -313,7 +314,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory3"
           );
-        } else if (this.lexi.texture.key === "lexiBag2" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiBag2" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -325,7 +326,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory4"
           );
-        } else if (this.lexi.texture.key === "lexiBag3" && x < 300) {
+        } else if (this.lexi.texture.key === "lexiBag3" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -337,7 +338,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory5"
           );
-        } else if (this.lexi.texture.key === "lexiBag3" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiBag3" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -349,7 +350,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory6"
           );
-        } else if (this.lexi.texture.key === "lexiBag4" && x < 300) {
+        } else if (this.lexi.texture.key === "lexiBag4" && x < 540) {
           this.chooseClothes(
             x,
             this.buttonLeft,
@@ -361,7 +362,7 @@ export default class VerticalGame extends Phaser.Scene {
             "progress3",
             "lexiAccessory7"
           );
-        } else if (this.lexi.texture.key === "lexiBag4" && x > 300) {
+        } else if (this.lexi.texture.key === "lexiBag4" && x > 540) {
           this.chooseClothes(
             x,
             this.buttonRight,
@@ -376,11 +377,11 @@ export default class VerticalGame extends Phaser.Scene {
         }
 
         // choice of place
-        if (this.displayBoardText.text === "Choose your place" && x < 300) {
+        if (this.displayBoardText.text === "Choose your place" && x < 540) {
           this.choosePlace(x, this.buttonLeft, this.place1, this.place2, "bg2");
         } else if (
           this.displayBoardText.text === "Choose your place" &&
-          x > 300
+          x > 540
         ) {
           this.choosePlace(
             x,
@@ -392,14 +393,14 @@ export default class VerticalGame extends Phaser.Scene {
         }
       };
 
-      this.buttonLeft.on("pointerdown", () => clickFunction(220));
-      this.buttonRight.on("pointerdown", () => clickFunction(500));
+      this.buttonLeft.on("pointerdown", () => clickFunction(460));
+      this.buttonRight.on("pointerdown", () => clickFunction(740));
 
       this.keySpace = this.input.keyboard.on("keydown-SPACE", () => {
-        this.hand.x < 300 ? clickFunction(220) : clickFunction(500);
+        this.hand.x < 540 ? clickFunction(460) : clickFunction(740);
       });
       this.keyEnter = this.input.keyboard.on("keydown-ENTER", () =>
-        this.hand.x < 300 ? clickFunction(220) : clickFunction(500)
+        this.hand.x < 540 ? clickFunction(460) : clickFunction(740)
       );
     }
 
@@ -463,14 +464,14 @@ export default class VerticalGame extends Phaser.Scene {
     // function of hover
     if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x < 280
+      this.hand.x < 520
     ) {
-      this.hover.x = 160;
+      this.hover.x = 400;
     } else if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x > 320
+      this.hand.x > 560
     ) {
-      this.hover.x = 440;
+      this.hover.x = 680;
     }
 
     // time 7200...7400
@@ -478,7 +479,8 @@ export default class VerticalGame extends Phaser.Scene {
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 &&
       this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 200
     ) {
-      this.hand.x = this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME * 3;
+      this.hand.x =
+        240 + (this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME * 3);
     }
 
     // time 7500...7760
@@ -487,7 +489,7 @@ export default class VerticalGame extends Phaser.Scene {
       this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560
     ) {
       this.hand.x =
-        480 +
+        720 +
         (this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 280 - this.timeCount);
     }
 
@@ -496,12 +498,12 @@ export default class VerticalGame extends Phaser.Scene {
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
       this.keyLeft.isDown
     ) {
-      this.hand.x = 220;
+      this.hand.x = 460;
     } else if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
       this.keyRight.isDown
     ) {
-      this.hand.x = 500;
+      this.hand.x = 740;
     }
 
     if (
@@ -513,9 +515,9 @@ export default class VerticalGame extends Phaser.Scene {
       this.keySpace.removeAllListeners("keydown-SPACE");
       this.keyEnter.removeAllListeners("keydown-ENTER");
 
-      if (this.lexi.x < 180) {
-        this.lexi.x = this.amasingDelay - 300;
-        this.paul.x = 900 - this.amasingDelay;
+      if (this.lexi.x < 400) {
+        this.lexi.x = this.amasingDelay - 540;
+        this.paul.x = 1600 - this.amasingDelay;
       }
 
       if (this.amasingDelay > 500 && this.amasingDelay < 800) {
@@ -582,7 +584,7 @@ export default class VerticalGame extends Phaser.Scene {
 
     setTimeout(() => {
       this.displayBoardText.text = `Choose your ${nextChoose}`;
-      this.displayBoardText.x = (600 - this.displayBoardText.width) / 2;
+      this.displayBoardText.x = (1080 - this.displayBoardText.width) / 2;
       this.progress.setTexture(progress);
       // TODO animation of magical change of clothes
       this.lexi.setTexture(lexiInClothes);

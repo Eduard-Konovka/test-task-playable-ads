@@ -1,5 +1,4 @@
-// TODO horizontal screen orientation
-import HorizontalGame from "./scenes/VerticalGame.js";
+import HorizontalGame from "./scenes/HorizontalGame.js";
 import VerticalGame from "./scenes/VerticalGame.js";
 
 new Phaser.Game({
