@@ -9,6 +9,7 @@ new Phaser.Game({
     window.innerWidth > window.innerHeight
       ? window.innerHeight / 900
       : window.innerWidth / 600,
+  autoCenter: 1,
   title: "My Fantasy: Make Your Story",
   url: "https://github.com/Eduard-Konovka/test-task-playable-ads",
   scene: window.innerWidth > window.innerHeight ? GameHorizontal : GameVertical,
