@@ -540,17 +540,23 @@ export default class GameHorizontal extends Phaser.Scene {
         this.playNow.setScale((this.amasingDelay - 2300) / 320);
       }
 
+      if (this.amasingDelay > 2600 && this.amasingDelay < 2650) {
+        this.playNow.setScale(1);
+      }
+
+      const goLink = () => {
+        this.playNow.setScale(0.9);
+
+        setTimeout(() => {
+          this.playNow.setScale(1);
+          window.location = "https://apps.apple.com/us/app/id1491717191";
+        }, 200);
+      };
+
       if (this.playNow._scaleX > 0) {
-        // TODO link to game source
-        this.input.keyboard.on("keydown-SPACE", () =>
-          console.log("Link to game source")
-        );
-        this.input.keyboard.on("keydown-ENTER", () =>
-          console.log("Link to game source")
-        );
-        this.playNow.on("pointerdown", () =>
-          console.log("Link to game source")
-        );
+        this.playNow.on("pointerdown", goLink);
+        this.input.keyboard.on("keydown-SPACE", goLink);
+        this.input.keyboard.on("keydown-ENTER", goLink);
       }
     }
 
