@@ -496,16 +496,16 @@ export default class GameVertical extends Phaser.Scene {
       this.mouseX = e.offsetX;
     };
 
-    // time > 7760
+    // time > 8000
     if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
+      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
       (this.keyLeft.isDown || this.mouseX < 300 * (window.innerHeight / 900))
     ) {
       setTimeout(() => {
         this.hand.x = 220;
       }, 50);
     } else if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
+      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
       (this.keyRight.isDown || this.mouseX > 300 * (window.innerHeight / 900))
     ) {
       setTimeout(() => {
