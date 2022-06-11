@@ -494,17 +494,25 @@ export default class GameHorizontal extends Phaser.Scene {
         (this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 280 - this.timeCount);
     }
 
+    document.querySelector("canvas").onmousemove = (e) => {
+      this.mouseX = e.offsetX;
+    };
+
     // time > 7760
     if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
-      this.keyLeft.isDown
+      (this.keyLeft.isDown || this.mouseX < 540 * (window.innerHeight / 900))
     ) {
-      this.hand.x = 460;
+      setTimeout(() => {
+        this.hand.x = 460;
+      }, 50);
     } else if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560 &&
-      this.keyRight.isDown
+      (this.keyRight.isDown || this.mouseX > 540 * (window.innerHeight / 900))
     ) {
-      this.hand.x = 740;
+      setTimeout(() => {
+        this.hand.x = 740;
+      }, 50);
     }
 
     if (
