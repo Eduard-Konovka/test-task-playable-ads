@@ -119,7 +119,7 @@ export default class GameVertical extends Phaser.Scene {
       .setScale(0);
   }
 
-  update(time, delta) {
+  update(_, delta) {
     this.timeCount += delta;
     this.idleTimeCount += Math.round(delta / 16);
 
@@ -495,21 +495,17 @@ export default class GameVertical extends Phaser.Scene {
         (this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 280 - this.timeCount);
     }
 
-    document.querySelector("canvas").onmousemove = (e) => {
-      this.mouseX = e.offsetX;
-    };
-
     // time > 8000
     if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
-      (this.keyLeft.isDown || this.mouseX < 300 * (window.innerHeight / 900))
+      this.keyLeft.isDown
     ) {
       setTimeout(() => {
         this.hand.x = 220;
       }, 50);
     } else if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
-      (this.keyRight.isDown || this.mouseX > 300 * (window.innerHeight / 900))
+      this.keyRight.isDown
     ) {
       setTimeout(() => {
         this.hand.x = 500;
@@ -569,9 +565,10 @@ export default class GameVertical extends Phaser.Scene {
       }
     }
 
-    // TODO function hint pointer for idle 3000 ms
+    // function hint pointer for idle 2000 ms
     if (
       this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
+      this.actionTime > 2000 &&
       this.idleTimeCount % 240 === 0
     ) {
       this.actionTime = 0;
