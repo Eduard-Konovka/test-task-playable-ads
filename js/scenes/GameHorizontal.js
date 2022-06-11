@@ -58,6 +58,7 @@ export default class GameHorizontal extends Phaser.Scene {
     this.load.image("place1", "place1.png");
     this.load.image("place2", "place2.png");
     this.load.image("playNow", "playNow.png");
+    this.load.image("star", "star.png");
 
     // plugin of click for keyboard on buttons
     this.keyLeft = this.input.keyboard.addKey(
@@ -624,7 +625,7 @@ export default class GameHorizontal extends Phaser.Scene {
       this.displayBoardText.text = `Choose your ${nextChoose}`;
       this.displayBoardText.x = (1080 - this.displayBoardText.width) / 2;
       this.progress.setTexture(progress);
-      // TODO animation of magical change of clothes
+      this.animateMagicalChange();
       this.lexi.setTexture(lexiInClothes);
 
       selectedClothes.destroy();
@@ -666,5 +667,25 @@ export default class GameHorizontal extends Phaser.Scene {
 
       this.background.setTexture(place);
     }, 200);
+  }
+
+  // function animation of magical change of clothes
+  animateMagicalChange() {
+    for (let i = 0; i < 7; ++i) {
+      this.leafs = this.physics.add.group({
+        key: "star",
+        repeat: 7,
+        setXY: {
+          x: 540,
+          y: 450,
+        },
+      });
+
+      this.leafs.children.iterate(function (child) {
+        child.setVelocityY(Phaser.Math.Between(-800, 800));
+        child.setVelocityX(Phaser.Math.Between(-800, 800));
+        child.setScale(Phaser.Math.FloatBetween(0.1, 1.7));
+      });
+    }
   }
 }
