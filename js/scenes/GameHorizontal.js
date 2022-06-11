@@ -5,6 +5,8 @@ export default class GameHorizontal extends Phaser.Scene {
     this.SCENE_DELAY = 3000;
     this.timeCount = 0;
     this.amasingDelay = 0;
+    this.idleTimeCount = 0;
+    this.actionTime = 0;
   }
 
   preload() {
@@ -119,6 +121,7 @@ export default class GameHorizontal extends Phaser.Scene {
 
   update(time, delta) {
     this.timeCount += delta;
+    this.idleTimeCount += Math.round(delta / 16);
 
     // time 0...300
     if (this.timeCount < this.DELAY_TIME) {
@@ -568,7 +571,29 @@ export default class GameHorizontal extends Phaser.Scene {
       }
     }
 
-    // TODO function hint pointer for idle 2000 ms
+    // TODO function hint pointer for idle 3000 ms
+    if (
+      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
+      this.idleTimeCount % 240 === 0
+    ) {
+      this.actionTime = 0;
+    }
+
+    if (this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800) {
+      this.callToAction(delta);
+    }
+  }
+
+  callToAction(delta) {
+    this.actionTime += delta / 1.714;
+
+    if (this.idleTimeCount % 240 < 30) {
+      this.hand.x = 460 + this.actionTime;
+    }
+
+    if (this.idleTimeCount % 240 > 30 && this.idleTimeCount % 240 < 60) {
+      this.hand.x = 740 - this.actionTime + 280;
+    }
   }
 
   chooseClothes(
