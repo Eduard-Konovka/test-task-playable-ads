@@ -59,6 +59,7 @@ export default class GameVertical extends Phaser.Scene {
     this.load.image("place2", "place2.png");
     this.load.image("playNow", "playNow.png");
     this.load.image("star", "star.png");
+    this.load.image("leaf", "leaf.png");
 
     // plugin of click for keyboard on buttons
     this.keyLeft = this.input.keyboard.addKey(
@@ -664,10 +665,11 @@ export default class GameVertical extends Phaser.Scene {
       this.lexi.setScale(1);
 
       this.background.setTexture(place);
+      this.animateFallingLeaves();
     }, 200);
   }
 
-  // function animation of magical change of clothes
+  // function of animation of magical change of clothes
   animateMagicalChange() {
     for (let i = 0; i < 7; ++i) {
       this.leafs = this.physics.add.group({
@@ -683,6 +685,27 @@ export default class GameVertical extends Phaser.Scene {
         child.setVelocityY(Phaser.Math.Between(-800, 800));
         child.setVelocityX(Phaser.Math.Between(-800, 800));
         child.setScale(Phaser.Math.FloatBetween(0.1, 1.7));
+        child.angle = Phaser.Math.Between(-180, 180);
+      });
+    }
+  }
+
+  animateFallingLeaves() {
+    for (let i = 0; i < 7; ++i) {
+      this.leafs = this.physics.add.group({
+        key: "leaf",
+        repeat: 7,
+        setXY: {
+          x: Phaser.Math.Between(200, 400),
+          y: -100,
+        },
+      });
+
+      this.leafs.children.iterate(function (child) {
+        child.setVelocityY(Phaser.Math.Between(100, 300));
+        child.setVelocityX(Phaser.Math.Between(-200, 200));
+        child.setScale(Phaser.Math.FloatBetween(0.2, 0.7));
+        child.angle = Phaser.Math.Between(-180, 180);
       });
     }
   }
