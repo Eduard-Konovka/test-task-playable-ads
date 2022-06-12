@@ -7,6 +7,7 @@ export default class GameHorizontal extends Phaser.Scene {
     this.amasingDelay = 0;
     this.idleTimeCount = 0;
     this.actionTime = 0;
+    this.tapController = 0;
   }
 
   preload() {
@@ -554,6 +555,11 @@ export default class GameHorizontal extends Phaser.Scene {
       }
 
       const goLink = () => {
+        this.tapController += 1;
+        if (this.tapController > 1) {
+          return;
+        }
+
         this.playNow.setScale(0.9);
 
         setTimeout(() => {
