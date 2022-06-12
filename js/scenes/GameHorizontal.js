@@ -120,6 +120,37 @@ export default class GameHorizontal extends Phaser.Scene {
     this.dialogAmasingPaul = this.add
       .image(540, 450, "dialogAmasingPaul")
       .setScale(0);
+
+    // buttons
+    this.buttonLeft = this.add.image(400, 720, "button").setScale(0);
+    this.buttonRight = this.add.image(680, 720, "button").setScale(0);
+    this.buttonLeft.setInteractive();
+    this.buttonRight.setInteractive();
+
+    // hover of button
+    this.hover = this.add.image(400, 720, "hover").setScale(0);
+
+    // sound of button
+    this.clickSound = this.sound.add("clickSound");
+
+    // clothes & places
+    this.clothes1 = this.add.image(400, 720, "clothes1").setScale(0);
+    this.clothes2 = this.add.image(680, 720, "clothes2").setScale(0);
+    this.clothes3 = this.add.image(400, 720, "clothes3").setScale(0);
+    this.clothes4 = this.add.image(680, 720, "clothes4").setScale(0);
+    this.clothes5 = this.add.image(400, 720, "clothes5").setScale(0);
+    this.clothes6 = this.add.image(680, 720, "clothes6").setScale(0);
+    this.clothes7 = this.add.image(680, 720, "clothes7").setScale(0);
+    this.place1 = this.add.image(400, 720, "place1").setScale(0);
+    this.place2 = this.add.image(680, 720, "place2").setScale(0);
+
+    // hint pointer
+    this.hand = this.add.image(460, 1200, "hand");
+
+    // link to game source
+    this.playNow = this.add.image(540, 800, "playNow").setScale(0);
+    this.playNow.setInteractive();
+    this.playNow.on("pointerdown", this.goLink, this);
   }
 
   update(_, delta) {
@@ -173,36 +204,6 @@ export default class GameHorizontal extends Phaser.Scene {
       this.dialogIntroLexi.destroy();
       this.lexi.active = false;
       this.lexi.setTexture("lexiIntro3");
-
-      // buttons
-      this.buttonLeft = this.add.image(400, 720, "button").setScale(0);
-      this.buttonRight = this.add.image(680, 720, "button").setScale(0);
-      this.buttonLeft.setInteractive();
-      this.buttonRight.setInteractive();
-
-      // hover of button
-      this.hover = this.add.image(400, 720, "hover").setScale(0);
-
-      // sound of button
-      this.clickSound = this.sound.add("clickSound");
-
-      // clothes & places
-      this.clothes1 = this.add.image(400, 720, "clothes1").setScale(0);
-      this.clothes2 = this.add.image(680, 720, "clothes2").setScale(0);
-      this.clothes3 = this.add.image(400, 720, "clothes3").setScale(0);
-      this.clothes4 = this.add.image(680, 720, "clothes4").setScale(0);
-      this.clothes5 = this.add.image(400, 720, "clothes5").setScale(0);
-      this.clothes6 = this.add.image(680, 720, "clothes6").setScale(0);
-      this.clothes7 = this.add.image(680, 720, "clothes7").setScale(0);
-      this.place1 = this.add.image(400, 720, "place1").setScale(0);
-      this.place2 = this.add.image(680, 720, "place2").setScale(0);
-
-      // hint pointer
-      this.hand = this.add.image(460, 1200, "hand");
-
-      // link to game source
-      this.playNow = this.add.image(540, 800, "playNow").setScale(0);
-      this.playNow.setInteractive();
 
       // function of click or tuch on buttons or keyboard
       const clickFunction = (x) => {
@@ -554,24 +555,9 @@ export default class GameHorizontal extends Phaser.Scene {
         this.playNow.setScale(1);
       }
 
-      const goLink = () => {
-        this.tapController += 1;
-        if (this.tapController > 1) {
-          return;
-        }
-
-        this.playNow.setScale(0.9);
-
-        setTimeout(() => {
-          this.playNow.setScale(1);
-          window.location = "https://apps.apple.com/us/app/id1491717191";
-        }, 200);
-      };
-
       if (this.playNow._scaleX > 0) {
-        this.playNow.on("pointerdown", goLink);
-        this.input.keyboard.on("keydown-SPACE", goLink);
-        this.input.keyboard.on("keydown-ENTER", goLink);
+        this.input.keyboard.on("keydown-SPACE", this.goLink, this);
+        this.input.keyboard.on("keydown-ENTER", this.goLink, this);
       }
     }
 
@@ -716,5 +702,14 @@ export default class GameHorizontal extends Phaser.Scene {
         child.angle = Phaser.Math.Between(-180, 180);
       });
     }
+  }
+
+  goLink() {
+    this.playNow.setScale(0.9);
+
+    setTimeout(() => {
+      this.playNow.setScale(1);
+      window.location = "https://apps.apple.com/us/app/id1491717191";
+    }, 200);
   }
 }
