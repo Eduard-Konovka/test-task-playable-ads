@@ -1,7 +1,7 @@
 {
   "name": "test-task-playable-ads",
   "version": "1.0.0",
-  "description": "Test task of dynamic keys",
+  "description": "Test task of playable advertising",
   "main": "./js/index.js",
   "scripts": {
     "deploy": "netlify deploy -p"
