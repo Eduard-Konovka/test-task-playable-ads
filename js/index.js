@@ -1,5 +1,4 @@
-import GameHorizontal from "./scenes/GameHorizontal.js";
-import GameVertical from "./scenes/GameVertical.js";
+import Game from "./scenes/Game.js";
 
 const body = document.querySelector("body");
 window.innerWidth < window.innerHeight &&
@@ -18,5 +17,5 @@ new Phaser.Game({
   physics: {
     default: "arcade",
   },
-  scene: window.innerWidth > window.innerHeight ? GameHorizontal : GameVertical,
+  scene: Game,
 });
