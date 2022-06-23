@@ -1,13 +1,7 @@
 export default class Game extends Phaser.Scene {
   constructor() {
     super("game");
-    this.DELAY_TIME = 300;
-    this.SCENE_DELAY = 3000;
-    this.timeCount = 0;
-    this.amasingDelay = 0;
-    this.idleTimeCount = 0;
-    this.actionTime = 0;
-    this.tapController = 0;
+    this.horizontalScreen = window.innerWidth > window.innerHeight;
   }
 
   preload() {
@@ -80,44 +74,29 @@ export default class Game extends Phaser.Scene {
 
     // background
     this.background = this.add.image(
-      window.innerWidth > window.innerHeight ? 540 : 300,
+      this.horizontalScreen ? 540 : 300,
       450,
       "bgH1"
     );
 
     // overlay
     this.graphics = this.add.graphics().fillStyle(0x000000, 0.7);
-    this.graphics.fillRect(
-      0,
-      0,
-      window.innerWidth > window.innerHeight ? 1080 : 600,
-      900
-    );
+    this.graphics.fillRect(0, 0, this.horizontalScreen ? 1080 : 600, 900);
 
     // display board
     this.displayBoard = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 540 : 300,
-        -40,
-        "displayBoard"
-      )
+      .image(this.horizontalScreen ? 540 : 300, -40, "displayBoard")
       .setScale(0.5);
     this.displayBoardText = this.add.text(0, -45, "Choose your dress", {
       fontSize: "32px",
       fill: "#fff",
     });
     this.displayBoardText.x =
-      ((window.innerWidth > window.innerHeight ? 1080 : 600) -
-        this.displayBoardText.width) /
-      2;
+      ((this.horizontalScreen ? 1080 : 600) - this.displayBoardText.width) / 2;
 
-    // progress
-    this.progress = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 540 : 300,
-        -10,
-        "progress0"
-      )
+    // display progress
+    this.displayProgress = this.add
+      .image(this.horizontalScreen ? 540 : 300, -10, "progress0")
       .setScale(0.9);
 
     // creating character animation
@@ -137,48 +116,36 @@ export default class Game extends Phaser.Scene {
 
     // adding animation heroes
     this.paul = this.add
-      .sprite(window.innerWidth > window.innerHeight ? 540 : 300, 465, "paul1")
+      .sprite(this.horizontalScreen ? 540 : 300, 465, "paul1")
       .play("introPaul");
     this.lexi = this.add.sprite(-300, 465, "lexiIntro1").play("introLexi");
 
     // hero dialogues
     this.dialogIntroPaul = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 540 : 300,
-        450,
-        "dialogIntroPaul"
-      )
+      .image(this.horizontalScreen ? 540 : 300, 450, "dialogIntroPaul")
       .setScale(0);
 
     this.dialogIntroLexi = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 540 : 300,
-        450,
-        "dialogIntroLexi"
-      )
+      .image(this.horizontalScreen ? 540 : 300, 450, "dialogIntroLexi")
       .setScale(0);
 
     this.dialogAmasingPaul = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 540 : 300,
-        450,
-        "dialogAmasingPaul"
-      )
+      .image(this.horizontalScreen ? 540 : 300, 450, "dialogAmasingPaul")
       .setScale(0);
 
     // buttons
     this.buttonLeft = this.add
-      .image(window.innerWidth > window.innerHeight ? 400 : 160, 720, "button")
+      .image(this.horizontalScreen ? 400 : 160, 720, "button")
       .setScale(0);
     this.buttonRight = this.add
-      .image(window.innerWidth > window.innerHeight ? 680 : 440, 720, "button")
+      .image(this.horizontalScreen ? 680 : 440, 720, "button")
       .setScale(0);
     this.buttonLeft.setInteractive();
     this.buttonRight.setInteractive();
 
     // hover of button
     this.hover = this.add
-      .image(window.innerWidth > window.innerHeight ? 400 : 160, 720, "hover")
+      .image(this.horizontalScreen ? 400 : 160, 720, "hover")
       .setScale(0);
 
     // sound of button
@@ -186,584 +153,486 @@ export default class Game extends Phaser.Scene {
 
     // clothes & places
     this.clothes1 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 400 : 160,
-        720,
-        "clothes1"
-      )
+      .image(this.horizontalScreen ? 400 : 160, 720, "clothes1")
       .setScale(0);
     this.clothes2 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 680 : 440,
-        720,
-        "clothes2"
-      )
+      .image(this.horizontalScreen ? 680 : 440, 720, "clothes2")
       .setScale(0);
     this.clothes3 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 400 : 160,
-        720,
-        "clothes3"
-      )
+      .image(this.horizontalScreen ? 400 : 160, 720, "clothes3")
       .setScale(0);
     this.clothes4 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 680 : 440,
-        720,
-        "clothes4"
-      )
+      .image(this.horizontalScreen ? 680 : 440, 720, "clothes4")
       .setScale(0);
     this.clothes5 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 400 : 160,
-        720,
-        "clothes5"
-      )
+      .image(this.horizontalScreen ? 400 : 160, 720, "clothes5")
       .setScale(0);
     this.clothes6 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 680 : 440,
-        720,
-        "clothes6"
-      )
+      .image(this.horizontalScreen ? 680 : 440, 720, "clothes6")
       .setScale(0);
     this.clothes7 = this.add
-      .image(
-        window.innerWidth > window.innerHeight ? 680 : 440,
-        720,
-        "clothes7"
-      )
+      .image(this.horizontalScreen ? 680 : 440, 720, "clothes7")
       .setScale(0);
     this.place1 = this.add
-      .image(window.innerWidth > window.innerHeight ? 400 : 160, 720, "place1")
+      .image(this.horizontalScreen ? 400 : 160, 720, "place1")
       .setScale(0);
     this.place2 = this.add
-      .image(window.innerWidth > window.innerHeight ? 680 : 440, 720, "place2")
+      .image(this.horizontalScreen ? 680 : 440, 720, "place2")
       .setScale(0);
 
     // hint pointer
-    this.hand = this.add.image(
-      window.innerWidth > window.innerHeight ? 460 : 220,
-      1200,
-      "hand"
-    );
+    this.hand = this.add.image(this.horizontalScreen ? 460 : 220, 1200, "hand");
 
     // link to game source
     this.playNow = this.add
-      .image(window.innerWidth > window.innerHeight ? 540 : 300, 800, "playNow")
+      .image(this.horizontalScreen ? 540 : 300, 800, "playNow")
       .setScale(0);
     this.playNow.setInteractive();
     this.playNow.on("pointerdown", this.goLink, this);
+
+    this.tweens.add({
+      targets: this.dialogIntroPaul,
+      scaleX: 0.5,
+      scaleY: 0.5,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => this.changeOfCharacters(),
+    });
   }
 
-  update(_, delta) {
-    this.timeCount += delta;
-    this.idleTimeCount += Math.round(delta / 16);
+  changeOfCharacters() {
+    this.tweens.add({
+      targets: this.dialogIntroPaul,
+      scaleX: 0,
+      scaleY: 0,
+      ease: "Power1",
+      delay: 2700,
+      duration: 300,
+      onComplete: () => this.changeOfDialogs(),
+    });
 
-    // time 0...300
-    if (this.timeCount < this.DELAY_TIME) {
-      this.dialogIntroPaul.setScale(this.timeCount / this.DELAY_TIME / 2);
-    }
+    this.tweens.add({
+      targets: this.paul,
+      x: this.horizontalScreen ? 1380 : 900,
+      ease: "Power1",
+      delay: 2700,
+      duration: 600,
+    });
 
-    // time 2700...3300
-    if (
-      this.timeCount > this.SCENE_DELAY - this.DELAY_TIME &&
-      this.timeCount < this.SCENE_DELAY + this.DELAY_TIME
-    ) {
-      this.dialogIntroPaul.setScale(
-        (this.SCENE_DELAY - this.timeCount) / this.DELAY_TIME / 2
-      );
-      this.paul.x =
-        this.DELAY_TIME * 2 +
-        this.timeCount -
-        this.SCENE_DELAY +
-        (window.innerWidth > window.innerHeight ? 540 : 0);
-      this.lexi.x =
-        this.timeCount -
-        this.SCENE_DELAY +
-        (window.innerWidth > window.innerHeight ? 240 : 0);
-    }
+    this.tweens.add({
+      targets: this.lexi,
+      x: this.horizontalScreen ? 540 : 300,
+      ease: "Power1",
+      delay: 2700,
+      duration: 600,
+    });
+  }
 
-    // time 3000...3300
-    if (
-      this.timeCount > this.SCENE_DELAY &&
-      this.timeCount < this.SCENE_DELAY + this.DELAY_TIME
-    ) {
-      this.dialogIntroPaul.destroy();
-      this.dialogIntroLexi.setScale(
-        (this.timeCount - this.SCENE_DELAY) / this.DELAY_TIME / 2
-      );
-    }
+  changeOfDialogs() {
+    this.dialogIntroPaul.destroy();
 
-    // time 5700...5989
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 - this.DELAY_TIME &&
-      this.timeCount < this.SCENE_DELAY * 2 - 11
-    ) {
-      this.dialogIntroLexi.setScale(
-        (this.SCENE_DELAY * 2 - this.timeCount) / this.DELAY_TIME / 2
-      );
-    }
+    this.tweens.add({
+      targets: this.dialogIntroLexi,
+      scaleX: 0.5,
+      scaleY: 0.5,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => this.gamePlay(),
+    });
+  }
 
-    // time 5990...6010
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 - 10 &&
-      this.timeCount < this.SCENE_DELAY * 2 + 10
-    ) {
-      this.dialogIntroLexi.destroy();
-      this.lexi.active = false;
-      this.lexi.setTexture("lexiIntro3");
+  gamePlay() {
+    this.tweens.add({
+      targets: this.dialogIntroLexi,
+      scaleX: 0,
+      scaleY: 0,
+      ease: "Power1",
+      delay: 2100,
+      duration: 300,
+      onComplete: () => {
+        this.dialogIntroLexi.destroy();
+        this.lexi.active = false;
+        this.lexi.setTexture("lexiIntro3");
 
-      // function of click or tuch on buttons or keyboard
-      const clickFunction = (x) => {
-        // choice of dress
-        if (
-          this.lexi.texture.key === "lexiIntro3" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes1,
-            this.clothes2,
-            this.clothes3,
-            this.clothes4,
-            "bag",
-            "progress1",
-            "lexiDress1"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiIntro3" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes2,
-            this.clothes1,
-            this.clothes3,
-            this.clothes4,
-            "bag",
-            "progress1",
-            "lexiDress2"
-          );
-        }
+        this.initializeButton();
+        this.initializeChoice1();
+      },
+    });
+  }
 
-        // choice of bag
-        if (
-          this.lexi.texture.key === "lexiDress1" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes3,
-            this.clothes4,
-            this.clothes5,
-            this.clothes6,
-            "accessory",
-            "progress2",
-            "lexiBag1"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiDress1" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes4,
-            this.clothes3,
-            this.clothes5,
-            this.clothes6,
-            "accessory",
-            "progress2",
-            "lexiBag2"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiDress2" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes3,
-            this.clothes4,
-            this.clothes5,
-            this.clothes7,
-            "accessory",
-            "progress2",
-            "lexiBag3"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiDress2" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes4,
-            this.clothes3,
-            this.clothes5,
-            this.clothes7,
-            "accessory",
-            "progress2",
-            "lexiBag4"
-          );
-        }
+  initializeButton() {
+    this.buttonLeft.on("pointerdown", () => this.clickFunctionLeft());
+    this.buttonRight.on("pointerdown", () => this.clickFunctionRight());
 
-        // choice of accessory
-        if (
-          this.lexi.texture.key === "lexiBag1" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes5,
-            this.clothes6,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory1"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag1" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes6,
-            this.clothes5,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory2"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag2" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes5,
-            this.clothes6,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory3"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag2" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes6,
-            this.clothes5,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory4"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag3" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes5,
-            this.clothes7,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory5"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag3" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes7,
-            this.clothes5,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory6"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag4" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonLeft,
-            this.clothes5,
-            this.clothes7,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory7"
-          );
-        } else if (
-          this.lexi.texture.key === "lexiBag4" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.chooseClothes(
-            x,
-            this.buttonRight,
-            this.clothes7,
-            this.clothes5,
-            this.place1,
-            this.place2,
-            "place",
-            "progress3",
-            "lexiAccessory8"
-          );
-        }
+    this.keySpace = this.input.keyboard.on("keydown-SPACE", () => {
+      this.hand.x < (this.horizontalScreen ? 540 : 300)
+        ? this.clickFunctionLeft()
+        : this.clickFunctionRight();
+    });
+    this.keyEnter = this.input.keyboard.on("keydown-ENTER", () =>
+      this.hand.x < (this.horizontalScreen ? 540 : 300)
+        ? this.clickFunctionLeft()
+        : this.clickFunctionRight()
+    );
+  }
 
-        // choice of place
-        if (
-          this.displayBoardText.text === "Choose your place" &&
-          x < (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.choosePlace(
-            x,
-            this.buttonLeft,
-            this.place1,
-            this.place2,
-            window.innerWidth > window.innerHeight ? "bgH2" : "bgV2"
-          );
-        } else if (
-          this.displayBoardText.text === "Choose your place" &&
-          x > (window.innerWidth > window.innerHeight ? 540 : 300)
-        ) {
-          this.choosePlace(
-            x,
-            this.buttonRight,
-            this.place2,
-            this.place1,
-            window.innerWidth > window.innerHeight ? "bgH3" : "bgV3"
-          );
-        }
-      };
+  // functions of click or tuch on buttons or keyboard
+  clickFunctionLeft() {
+    const key = this.lexi.texture.key;
 
-      this.buttonLeft.on("pointerdown", () =>
-        clickFunction(window.innerWidth > window.innerHeight ? 460 : 220)
-      );
-      this.buttonRight.on("pointerdown", () =>
-        clickFunction(window.innerWidth > window.innerHeight ? 740 : 500)
-      );
-
-      this.keySpace = this.input.keyboard.on("keydown-SPACE", () => {
-        this.hand.x < (window.innerWidth > window.innerHeight ? 540 : 300)
-          ? clickFunction(window.innerWidth > window.innerHeight ? 460 : 220)
-          : clickFunction(window.innerWidth > window.innerHeight ? 740 : 500);
-      });
-      this.keyEnter = this.input.keyboard.on("keydown-ENTER", () =>
-        this.hand.x < (window.innerWidth > window.innerHeight ? 540 : 300)
-          ? clickFunction(window.innerWidth > window.innerHeight ? 460 : 220)
-          : clickFunction(window.innerWidth > window.innerHeight ? 740 : 500)
-      );
-    }
-
-    // time 6011...6300
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + 11 &&
-      this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME
-    ) {
-      this.graphics.destroy();
-      this.graphics = this.add
-        .graphics()
-        .fillStyle(
-          0x000000,
-          (this.SCENE_DELAY * 3 - this.timeCount) / this.DELAY_TIME / 16
+    switch (key) {
+      // choice of dress
+      case "lexiIntro3":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes1,
+          this.clothes2,
+          this.clothes3,
+          this.clothes4,
+          "bag",
+          "progress1",
+          "lexiDress1"
         );
+        break;
 
-      this.lexi.setScale(
-        1 + (this.timeCount - this.SCENE_DELAY * 2) / this.DELAY_TIME / 8
-      );
-      this.lexi.y = 465 + (this.timeCount - this.SCENE_DELAY * 2) / 4;
+      // choice of bag
+      case "lexiDress1":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes3,
+          this.clothes4,
+          this.clothes5,
+          this.clothes6,
+          "accessory",
+          "progress2",
+          "lexiBag1"
+        );
+        break;
 
-      this.displayBoard.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5;
-      this.displayBoardText.y =
-        (this.timeCount - this.SCENE_DELAY * 2) / 7.5 - 15;
-      this.progress.y = (this.timeCount - this.SCENE_DELAY * 2) / 7.5 + 35;
+      case "lexiDress2":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes3,
+          this.clothes4,
+          this.clothes5,
+          this.clothes7,
+          "accessory",
+          "progress2",
+          "lexiBag3"
+        );
+        break;
 
-      this.buttonLeft.setScale(
-        (this.timeCount - this.SCENE_DELAY * 2) / this.DELAY_TIME
-      );
-      this.clothes1.setScale(
-        (this.timeCount - this.SCENE_DELAY * 2) / this.DELAY_TIME
-      );
-    }
+      // choice of accessory
+      case "lexiBag1":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes5,
+          this.clothes6,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory1"
+        );
+        break;
 
-    // time 6300...6600
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME &&
-      this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 2
-    ) {
-      this.buttonRight.setScale(
-        (this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME) /
-          this.DELAY_TIME
-      );
-      this.clothes2.setScale(
-        (this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME) /
-          this.DELAY_TIME
-      );
-    }
+      case "lexiBag2":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes5,
+          this.clothes6,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory3"
+        );
+        break;
 
-    // time 6600...6900
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 3
-    ) {
-      this.buttonLeft.setScale(1);
-      this.buttonRight.setScale(1);
-      this.hover.setScale(1);
-      this.hand.y = (1000000 / this.timeCount) * 5.75;
-    }
+      case "lexiBag3":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes5,
+          this.clothes7,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory5"
+        );
+        break;
 
-    // function of hover
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x < (window.innerWidth > window.innerHeight ? 520 : 280)
-    ) {
-      this.hover.x = window.innerWidth > window.innerHeight ? 400 : 160;
-    } else if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 2 &&
-      this.hand.x > (window.innerWidth > window.innerHeight ? 560 : 320)
-    ) {
-      this.hover.x = window.innerWidth > window.innerHeight ? 680 : 440;
-    }
+      case "lexiBag4":
+        this.chooseClothes(
+          this.horizontalScreen ? 460 : 220,
+          this.buttonLeft,
+          this.clothes5,
+          this.clothes7,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory7"
+        );
+        break;
 
-    // time 7200...7400
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 &&
-      this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 200
-    ) {
-      this.hand.x =
-        window.innerWidth > window.innerHeight
-          ? 240 + (this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME * 3)
-          : this.timeCount - this.SCENE_DELAY * 2 - this.DELAY_TIME * 3;
-    }
-
-    // time 7500...7760
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 300 &&
-      this.timeCount < this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 560
-    ) {
-      this.hand.x =
-        (window.innerWidth > window.innerHeight ? 720 : 480) +
-        (this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 280 - this.timeCount);
-    }
-
-    // time > 8000
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
-      this.keyLeft.isDown
-    ) {
-      setTimeout(() => {
-        this.hand.x = window.innerWidth > window.innerHeight ? 460 : 220;
-      }, 50);
-    } else if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
-      this.keyRight.isDown
-    ) {
-      setTimeout(() => {
-        this.hand.x = window.innerWidth > window.innerHeight ? 740 : 500;
-      }, 50);
-    }
-
-    if (
-      this.background.texture.key === "bgH2" ||
-      this.background.texture.key === "bgH3" ||
-      this.background.texture.key === "bgV2" ||
-      this.background.texture.key === "bgV3"
-    ) {
-      this.amasingDelay += delta;
-      this.keySpace.removeAllListeners();
-
-      if (this.lexi.x < (window.innerWidth > window.innerHeight ? 400 : 180)) {
-        this.lexi.x =
-          this.amasingDelay -
-          (window.innerWidth > window.innerHeight ? 540 : 300);
-        this.paul.x =
-          (window.innerWidth > window.innerHeight ? 1600 : 900) -
-          this.amasingDelay;
-      }
-
-      if (this.amasingDelay > 500 && this.amasingDelay < 800) {
-        this.dialogAmasingPaul.setScale((this.amasingDelay - 500) / 640);
-      }
-
-      if (this.amasingDelay > 800 && this.amasingDelay < 900) {
-        this.dialogAmasingPaul.setScale(0.5);
-      }
-
-      if (this.amasingDelay > 2000) {
-        this.paul.setTexture("paul1");
-      }
-
-      if (this.amasingDelay > 2000 && this.amasingDelay < 2300) {
-        this.dialogAmasingPaul.setScale(0.5 - (this.amasingDelay - 2000) / 640);
-      }
-
-      if (this.amasingDelay > 2300 && this.amasingDelay < 2600) {
-        this.dialogAmasingPaul.destroy();
-        this.playNow.setScale((this.amasingDelay - 2300) / 320);
-      }
-
-      if (this.amasingDelay > 2600 && this.amasingDelay < 2650) {
-        this.playNow.setScale(1);
-      }
-
-      if (this.playNow._scaleX > 0) {
-        this.input.keyboard.on("keydown-SPACE", this.goLink, this);
-        this.input.keyboard.on("keydown-ENTER", this.goLink, this);
-      }
-    }
-
-    // function hint pointer for idle 2000 ms
-    if (
-      this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800 &&
-      this.actionTime > 2000 &&
-      this.idleTimeCount % 240 === 0
-    ) {
-      this.actionTime = 0;
-    }
-
-    if (this.timeCount > this.SCENE_DELAY * 2 + this.DELAY_TIME * 4 + 800) {
-      this.callToAction(delta);
+      // choice of place
+      default:
+        this.displayBoardText.text === "Choose your place"
+          ? this.choosePlace(
+              this.horizontalScreen ? 460 : 220,
+              this.buttonLeft,
+              this.place1,
+              this.place2,
+              this.horizontalScreen ? "bgH2" : "bgV2"
+            )
+          : console.log("Invalid data type");
     }
   }
 
-  callToAction(delta) {
-    this.actionTime += delta / 1.714;
+  clickFunctionRight() {
+    const key = this.lexi.texture.key;
 
-    if (this.idleTimeCount % 240 < 30) {
-      this.hand.x =
-        (window.innerWidth > window.innerHeight ? 460 : 220) + this.actionTime;
+    switch (key) {
+      // choice of dress
+      case "lexiIntro3":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes2,
+          this.clothes1,
+          this.clothes3,
+          this.clothes4,
+          "bag",
+          "progress1",
+          "lexiDress2"
+        );
+        break;
+
+      // choice of bag
+      case "lexiDress1":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes4,
+          this.clothes3,
+          this.clothes5,
+          this.clothes6,
+          "accessory",
+          "progress2",
+          "lexiBag2"
+        );
+        break;
+
+      case "lexiDress2":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes4,
+          this.clothes3,
+          this.clothes5,
+          this.clothes7,
+          "accessory",
+          "progress2",
+          "lexiBag4"
+        );
+        break;
+
+      // choice of accessory
+      case "lexiBag1":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes6,
+          this.clothes5,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory2"
+        );
+        break;
+
+      case "lexiBag2":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes6,
+          this.clothes5,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory4"
+        );
+        break;
+
+      case "lexiBag3":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes7,
+          this.clothes5,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory6"
+        );
+        break;
+
+      case "lexiBag4":
+        this.chooseClothes(
+          this.horizontalScreen ? 740 : 500,
+          this.buttonRight,
+          this.clothes7,
+          this.clothes5,
+          this.place1,
+          this.place2,
+          "place",
+          "progress3",
+          "lexiAccessory8"
+        );
+        break;
+
+      // choice of place
+      default:
+        this.displayBoardText.text === "Choose your place"
+          ? this.choosePlace(
+              this.horizontalScreen ? 740 : 500,
+              this.buttonRight,
+              this.place2,
+              this.place1,
+              this.horizontalScreen ? "bgH3" : "bgV3"
+            )
+          : console.log("Invalid data type");
+    }
+  }
+
+  initializeChoice1() {
+    this.graphics.destroy();
+
+    this.tweens.add({
+      targets: this.lexi,
+      y: 550,
+      scaleX: 1.1,
+      scaleY: 1.1,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.displayBoard,
+      y: 40,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.displayBoardText,
+      y: 25,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.displayProgress,
+      y: 75,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.buttonLeft,
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.clothes1,
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => this.initializeChoice2(),
+    });
+  }
+
+  initializeChoice2() {
+    this.tweens.add({
+      targets: this.buttonRight,
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      duration: 300,
+    });
+
+    this.tweens.add({
+      targets: this.clothes2,
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => this.initializeHand(),
+    });
+  }
+
+  initializeHand() {
+    this.hover.setScale(1);
+
+    this.tweens.add({
+      targets: this.hand,
+      y: 835,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => this.handMoveRight(),
+    });
+  }
+
+  handMoveRight() {
+    this.tweens.add({
+      targets: this.hand,
+      x: this.horizontalScreen ? 740 : 500,
+      ease: "Power1",
+      delay: 100,
+      duration: 400,
+      onComplete: () => this.handMoveLeft(),
+    });
+  }
+
+  handMoveLeft() {
+    this.tweens.add({
+      targets: this.hand,
+      x: this.horizontalScreen ? 460 : 220,
+      ease: "Power1",
+      delay: 100,
+      duration: 400,
+      onComplete: () =>
+        this.time.delayedCall(2000, this.handMoveRight, null, this),
+    });
+  }
+
+  update() {
+    // function of hover
+    if (this.hand.x < (this.horizontalScreen ? 520 : 280)) {
+      this.hover.x = this.horizontalScreen ? 400 : 160;
+    } else if (this.hand.x > (this.horizontalScreen ? 560 : 320)) {
+      this.hover.x = this.horizontalScreen ? 680 : 440;
     }
 
-    if (this.idleTimeCount % 240 > 30 && this.idleTimeCount % 240 < 60) {
-      this.hand.x =
-        (window.innerWidth > window.innerHeight ? 740 : 500) -
-        this.actionTime +
-        280;
+    // function hand following for click
+    if (this.keyLeft.isDown) {
+      this.hand.x = this.horizontalScreen ? 460 : 220;
+    } else if (this.keyRight.isDown) {
+      this.hand.x = this.horizontalScreen ? 740 : 500;
     }
   }
 
@@ -782,33 +651,36 @@ export default class Game extends Phaser.Scene {
 
     this.clickSound.play();
 
-    this.hand.setScale(0.9);
-    button.setScale(0.9);
-    this.hover.setScale(0.9);
-    selectedClothes.setScale(0.9);
+    this.tweens.add({
+      targets: [this.hand, button, this.hover, selectedClothes],
+      scaleX: 0.9,
+      scaleY: 0.9,
+      ease: "Power1",
+      duration: 100,
+    });
 
-    setTimeout(() => {
-      this.hand.setScale(1);
-      button.setScale(1);
-      this.hover.setScale(1);
-      selectedClothes.setScale(1);
-    }, 100);
+    this.tweens.add({
+      targets: [this.hand, button, this.hover, selectedClothes],
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      delay: 100,
+      duration: 100,
+      onComplete: () => {
+        this.displayBoardText.text = `Choose your ${nextChoose}`;
+        this.displayBoardText.x =
+          ((this.horizontalScreen ? 1080 : 600) - this.displayBoardText.width) /
+          2;
+        this.displayProgress.setTexture(progress);
+        this.animateMagicalChange();
+        this.lexi.setTexture(lexiInClothes);
 
-    setTimeout(() => {
-      this.displayBoardText.text = `Choose your ${nextChoose}`;
-      this.displayBoardText.x =
-        ((window.innerWidth > window.innerHeight ? 1080 : 600) -
-          this.displayBoardText.width) /
-        2;
-      this.progress.setTexture(progress);
-      this.animateMagicalChange();
-      this.lexi.setTexture(lexiInClothes);
-
-      selectedClothes.destroy();
-      alternativeClothes.destroy();
-      nextClothes1.setScale(1);
-      nextClothes2.setScale(1);
-    }, 200);
+        selectedClothes.destroy();
+        alternativeClothes.destroy();
+        nextClothes1.setScale(1);
+        nextClothes2.setScale(1);
+      },
+    });
   }
 
   choosePlace(x, button, selectedClothes, alternativeClothes, place) {
@@ -816,34 +688,39 @@ export default class Game extends Phaser.Scene {
 
     this.clickSound.play();
 
-    this.hand.setScale(0.9);
-    button.setScale(0.9);
-    this.hover.setScale(0.9);
-    selectedClothes.setScale(0.9);
+    this.tweens.add({
+      targets: [this.hand, button, this.hover, selectedClothes],
+      scaleX: 0.9,
+      scaleY: 0.9,
+      ease: "Power1",
+      duration: 100,
+    });
 
-    setTimeout(() => {
-      this.hand.setScale(1);
-      button.setScale(1);
-      this.hover.setScale(1);
-      selectedClothes.setScale(1);
-    }, 100);
+    this.tweens.add({
+      targets: [this.hand, button, this.hover, selectedClothes],
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      delay: 100,
+      duration: 100,
+      onComplete: () => {
+        this.displayBoard.destroy();
+        this.displayBoardText.destroy();
+        this.displayProgress.destroy();
+        this.buttonLeft.destroy();
+        this.buttonRight.destroy();
+        this.hover.destroy();
+        this.hand.destroy();
+        selectedClothes.destroy();
+        alternativeClothes.destroy();
+        this.lexi.x = -300;
+        this.lexi.setScale(1);
 
-    setTimeout(() => {
-      this.displayBoard.destroy();
-      this.displayBoardText.destroy();
-      this.progress.destroy();
-      this.buttonLeft.destroy();
-      this.buttonRight.destroy();
-      this.hover.destroy();
-      this.hand.destroy();
-      selectedClothes.destroy();
-      alternativeClothes.destroy();
-      this.lexi.x = -300;
-      this.lexi.setScale(1);
-
-      this.background.setTexture(place);
-      this.animateFallingLeaves();
-    }, 200);
+        this.background.setTexture(place);
+        this.animateFallingLeaves();
+        this.amazingScreen();
+      },
+    });
   }
 
   // function of animation of magical change of clothes
@@ -853,7 +730,7 @@ export default class Game extends Phaser.Scene {
         key: "star",
         repeat: 7,
         setXY: {
-          x: window.innerWidth > window.innerHeight ? 540 : 300,
+          x: this.horizontalScreen ? 540 : 300,
           y: 450,
         },
       });
@@ -874,8 +751,8 @@ export default class Game extends Phaser.Scene {
         repeat: 7,
         setXY: {
           x: Phaser.Math.Between(
-            window.innerWidth > window.innerHeight ? 500 : 200,
-            window.innerWidth > window.innerHeight ? 580 : 400
+            this.horizontalScreen ? 500 : 200,
+            this.horizontalScreen ? 580 : 400
           ),
           y: -100,
         },
@@ -895,12 +772,77 @@ export default class Game extends Phaser.Scene {
     }
   }
 
-  goLink() {
-    this.playNow.setScale(0.9);
+  amazingScreen() {
+    this.keySpace.removeAllListeners();
 
-    setTimeout(() => {
-      this.playNow.setScale(1);
-      window.location = "https://apps.apple.com/us/app/id1491717191";
-    }, 200);
+    this.tweens.add({
+      targets: this.lexi,
+      x: this.horizontalScreen ? 400 : 160,
+      ease: "Power1",
+      duration: 600,
+    });
+
+    this.tweens.add({
+      targets: this.paul,
+      x: this.horizontalScreen ? 640 : 400,
+      ease: "Power1",
+      duration: 600,
+      onComplete: () => this.runDialogAmasingPaul(),
+    });
+  }
+
+  runDialogAmasingPaul() {
+    this.tweens.add({
+      targets: this.dialogAmasingPaul,
+      scaleX: 0.5,
+      scaleY: 0.5,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () =>
+        this.time.delayedCall(2000, this.destroyDialogAmasingPaul, null, this),
+    });
+  }
+
+  destroyDialogAmasingPaul() {
+    this.tweens.add({
+      targets: this.dialogAmasingPaul,
+      scaleX: 0,
+      scaleY: 0,
+      ease: "Power1",
+      duration: 300,
+      onComplete: () => {
+        this.paul.active = false;
+        this.paul.setTexture("paul1");
+
+        this.runPlayNow();
+      },
+    });
+  }
+
+  runPlayNow() {
+    this.input.keyboard.on("keydown-SPACE", this.goLink, this);
+    this.input.keyboard.on("keydown-ENTER", this.goLink, this);
+
+    this.tweens.add({
+      targets: this.playNow,
+      scaleX: 1,
+      scaleY: 1,
+      ease: "Power1",
+      duration: 300,
+    });
+  }
+
+  goLink() {
+    this.tweens.add({
+      targets: this.playNow,
+      scaleX: 0.9,
+      scaleY: 0.9,
+      ease: "Power1",
+      duration: 200,
+      onComplete: () => {
+        this.playNow.setScale(1);
+        window.location = "https://apps.apple.com/us/app/id1491717191";
+      },
+    });
   }
 }
