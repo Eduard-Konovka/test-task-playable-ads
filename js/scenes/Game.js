@@ -7,8 +7,8 @@
  * міркувань, що це теоретично насправді більш економічне рішення, тому що
  * фактично задіюється лише одна з ігор й виконується розрахунок полотна canvas
  * лише один раз. В протилежному випадку для задавання позицій графічних
- * елементів доводиться вираховувати ці позиції кожного разу - це кілька сотень
- * однакових розрахунків.
+ * елементів доводиться вираховувати ці позиції кожного разу - це кілька
+ * десятків однакових розрахунків.
  * Але я спробував виправити дублювання коду і задіяв лише один клас Game.
  *
  * @question - Може є якесь простіше канонічне рішення, яке визначено
@@ -648,15 +648,7 @@ export default class Game extends Phaser.Scene {
     });
 
     this.tweens.add({
-      targets: this.buttonLeft,
-      scaleX: 1,
-      scaleY: 1,
-      ease: "Power1",
-      duration: 300,
-    });
-
-    this.tweens.add({
-      targets: this.clothes1,
+      targets: [this.buttonLeft, this.clothes1],
       scaleX: 1,
       scaleY: 1,
       ease: "Power1",
@@ -667,15 +659,7 @@ export default class Game extends Phaser.Scene {
 
   initializeChoice2() {
     this.tweens.add({
-      targets: this.buttonRight,
-      scaleX: 1,
-      scaleY: 1,
-      ease: "Power1",
-      duration: 300,
-    });
-
-    this.tweens.add({
-      targets: this.clothes2,
+      targets: [this.buttonRight, this.clothes2],
       scaleX: 1,
       scaleY: 1,
       ease: "Power1",
