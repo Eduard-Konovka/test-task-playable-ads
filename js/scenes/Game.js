@@ -158,6 +158,11 @@ export default class Game extends Phaser.Scene {
     this.load.image("star", "star.png");
     this.load.image("leaf", "leaf.png");
 
+    this.load.spritesheet("firework", "firework.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     // plugin of click for keyboard on buttons
     this.keyLeft = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.LEFT
@@ -211,6 +216,17 @@ export default class Game extends Phaser.Scene {
       frames: [{ key: "lexiIntro1" }, { key: "lexiIntro2", duration: 50 }],
       frameRate: 2,
       repeat: -1,
+    });
+
+    // creating fireworks animation
+    this.anims.create({
+      key: "moveFireworks",
+      frames: this.anims.generateFrameNumbers("firework", {
+        start: 0,
+        end: 16,
+      }),
+      frameRate: 20,
+      repeat: 0,
     });
 
     // adding animation heroes
@@ -755,7 +771,7 @@ export default class Game extends Phaser.Scene {
           ((this.horizontalScreen ? 1080 : 600) - this.displayBoardText.width) /
           2;
         this.displayProgress.setTexture(progress);
-        this.animateMagicalChange();
+        this.animateClothesChange();
         this.lexi.setTexture(lexiInClothes);
 
         selectedClothes.destroy();
@@ -800,14 +816,30 @@ export default class Game extends Phaser.Scene {
         this.lexi.setScale(1);
 
         this.background.setTexture(place);
-        this.animateFallingLeaves();
+        this.animatePlaceChange();
         this.amazingScreen();
       },
     });
   }
 
   // function of animation of magical change of clothes
-  animateMagicalChange() {
+  animateClothesChange() {
+    for (let i = 0; i < 192; ++i) {
+      this.fireworks = this.add
+        .sprite(
+          Phaser.Math.Between(0, this.horizontalScreen ? 1080 : 600),
+          Phaser.Math.Between(0, 900),
+          "firework"
+        )
+        .setScale(Phaser.Math.FloatBetween(0.1, 2));
+      this.fireworks.angle = Phaser.Math.Between(-180, 180);
+
+      this.fireworks.play("moveFireworks");
+    }
+  }
+
+  // function of animation of change of place
+  animatePlaceChange() {
     for (let i = 0; i < 7; ++i) {
       this.leafs = this.physics.add.group({
         key: "star",
@@ -825,9 +857,7 @@ export default class Game extends Phaser.Scene {
         child.angle = Phaser.Math.Between(-180, 180);
       });
     }
-  }
 
-  animateFallingLeaves() {
     for (let i = 0; i < 7; ++i) {
       this.leafs = this.physics.add.group({
         key: "leaf",
