@@ -2,7 +2,7 @@ import Game from "./scenes/Game.js";
 
 const body = document.querySelector("body");
 window.innerWidth < window.innerHeight &&
-  body.setAttribute("style", "height: 92vh");
+  body.setAttribute("style", `height: ${window.innerHeight}px`);
 
 new Phaser.Game({
   type: Phaser.AUTO,
